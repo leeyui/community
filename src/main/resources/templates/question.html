@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/community.css">
+</head>
+<body>
+<div th:insert="~{header :: copy}">
+</div>
+<div class="container-fluid left-frame">
+
+    <div class="row">
+        <div class="col-lg-9 .col-md-12 .col-sm-12 .col-xs-12">
+            <h1 class="question-title" th:text="${question.getTitle()}">问题</h1>
+            <div class="question-creator">
+            <span><a href="/">mycommunity</a> </span>
+            <span >| 作者</span>
+        </div>
+
+            <hr>
+            <div th:utext="${question.getDescription()}"
+            style="min-height: 400px;border: 20px #c4e3f3;margin: 5px auto"></div>
+            <span class="text-desc"><span th:text="${question.getCommentCount()}"></span> 个回复, <span
+                    th:text="${question.getViewCount()}"></span>次浏览, <span
+                    th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd')}"></span></span>
+            <hr>
+
+            <div>
+                <span class="glyphicon glyphicon-pencil" th:if="${session.user != null && session.user.getId() ==question.getUser().getId()}"><a th:href="'/question/edit/'+${question.getId()}">编辑</a></span>
+                <span class="glyphicon glyphicon-plus">评论</span>
+            </div>
+
+        </div>
+        <div class="col-lg-3 .col-md-12 .col-sm-12 .col-xs-12">
+            <h3 class="question-publisher">发起人</h3>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" th:src="${question.getUser().getAvatarUrl()}" height="50" width="50"/>
+                    </a>
+                </div>
+                <div class="media-body">
+                    leeyui
+                </div>
+            </div>
+            <hr style="margin-top: 50px">
+            <h3>相关话题</h3>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/community.css">
+</head>
+<body>
+<div th:insert="~{header :: copy}">
+</div>
+<div class="container-fluid left-frame">
+
+    <div class="row">
+        <div class="col-lg-9 .col-md-12 .col-sm-12 .col-xs-12">
+            <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h3>
+            <hr>
+            <div class="media" th:each="question : ${page.getList()}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object avatar" th:src="${question.getUser().getAvatarUrl()}" alt="消失在异次元了...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a th:href="'/question/'+ ${question.getId()}" th:text="${question.getTitle()}"></a>
+                    </h4>
+                    <div th:utext="${question.getDescription()}" class=".line-limit-length" style="max-height: 50px"></div><br/>
+                    <div class="text-desc"><span th:text="${question.getCommentCount()}"></span> 个回复, <span
+                            th:text="${question.getViewCount()}"></span>次浏览, <span
+                            th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd')}"></span></div>
+                </div>
+            </div>
+            <nav aria-label="Page navigation" style="text-align: center">
+                <ul class="pagination pagination-lg">
+                    <li class="" th:classappend="${page.isHasPrevious()}?'active':'disabled'">
+                        <a th:href="'/' + ${session.pagepath}+ '?page='+ ${page.getCurrentPage()-1}" aria-label="Previous"
+                           th:if="${page.isHasPrevious()} == true">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <span th:if="${page.isHasPrevious()} == false">
+                            <span aria-hidden="true">&laquo;</span>
+                        </span>
+                    </li>
+                    <ul class="pagination pagination-lg"  th:each="count:${page.getPages()}" style="display: inline">
+                        <li class="" th:classappend="${page.currentPage == count }?'active':''">
+                        <a th:href="'/' + ${session.pagepath}+  '?page='+ ${count}" th:text="${count}" ></a>
+                        </li>
+                    </ul>
+
+                    <li class="" th:classappend="${page.isHasNext()}?'active':'disabled'">
+                        <a aria-label="Next" th:href="'/' + ${session.pagepath}+ '?page='+ ${page.getCurrentPage()+1}" th:if="${page.isHasNext()} == true">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        <span th:if="${page.isHasNext()} == false">
+                            <span aria-hidden="true">&laquo;</span>
+                        </span>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+        <div class="col-lg-3 .col-md-12 .col-sm-12 .col-xs-12">
+            <h3>热门话题</h3>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+ALTER TABLE question change gmt_modifiied gmt_modified bigint(20);
